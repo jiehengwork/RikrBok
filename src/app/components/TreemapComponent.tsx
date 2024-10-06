@@ -10,11 +10,7 @@ const TreemapColors = [
     '#E64A45', '#B14F4F'
 ];
 
-interface Props {
-
-}
-
-const TreemapComponent: NextPage<Props> = () => {
+const TreemapComponent: NextPage = () => {
     const data = [
         { name: 'Group A', size: 30 },
         { name: 'Group B', size: 25 },
@@ -29,8 +25,31 @@ const TreemapComponent: NextPage<Props> = () => {
         // Add more groups as needed to reach 20
     ];
 
-    const CustomizedContent = (props: any) => {
-        const { root, depth, x, y, width, height, index, name, size } = props;
+    interface CustomizedContentProps {
+        root: {
+            value: number;
+        };
+        depth: number;
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+        index: number;
+        name: string;
+        size: number;
+    }
+    const CustomizedContent: React.FC<Partial<CustomizedContentProps>> = (props) => {
+        const {
+            root={value: 0},
+            depth=0,
+            x=0,
+            y=0,
+            width=0,
+            height=0,
+            index=0,
+            name='',
+            size=0,
+        } = props;
 
         const fontSize = Math.min(width / 6, height / 4, 14);
         const percentValue = ((size / root.value) * 100).toFixed(1);
